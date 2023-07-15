@@ -4,22 +4,9 @@ import router from './router/index.js'
 import axios from 'axios'
 window.axios = axios;
 
-import {
-    Checkbox,
-    Input,
-    Select,
-    Avatar,
-    Table,
-    Card,
-    Menu,
-    List,
-    Drawer, 
-    Button,
-    message 
-} from 'ant-design-vue';
+import Antd from 'ant-design-vue';
 
 import App from './App.vue';
-
 // Sử dụng Icon Font Awesome cách 2
 // import { library } from '@fortawesome/fontawesome-svg-core';
 // import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -41,16 +28,8 @@ const app = createApp(App);
 
 app.use(createPinia());
 app.use(router);
-app.use(Checkbox);
-app.use(Input);
-app.use(Select);
-app.use(Avatar);
-app.use(Table);
-app.use(Card);
-app.use(Menu);
-app.use(List);
-app.use(Button);
-app.use(Drawer);
+app.use(Antd);
+
+
 app.mount('#app');
 
-app.config.globalProperties.$message = message;

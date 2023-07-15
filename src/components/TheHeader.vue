@@ -1,53 +1,54 @@
 <template>
-  <div class="containter-fluid">
+  <div class="containter">
     <div
       class="row text-white"
-      style="background-color: #0c713d; padding: 1rem"
+      style="background: linear-gradient(56deg, rgba(255,140,0,1) 0%, rgba(255,169,0,1) 81%); padding: 1rem"
     >
-      <div
+      <!-- <div
         class="col-1 d-flex d-sm-none align-items-center justify-content-center"
       >
         <span @click="showDrawer()">
           <i class="fa-solid fa-align-justify"></i>
         </span>
-      </div>
-
+      </div> -->
+<div class="d-flex container align-items-center justify-content-between px-5">
       <div
         class="
-          col-10 col-sm-9
-          d-flex
+        d-flex
           align-items-center
           justify-content-center justify-content-sm-start
         "
       >
-        <img
+        <!-- <img
           src="../assets/logo.png"
           alt="Logo"
           height="32"
           width="34"
           class="ms-3 me-3"
-        />
-        <span class="d-none d-sm-flex">QUẢN TRỊ</span>
+        /> -->
+        <i class="fas fa-home" style="width: 30px; font-size: 20px;"></i>
+        <span class="d-none d-sm-flex text-logo">Anywhere</span>
       </div>
 
       <div
         class="
-          col-sm-3
-          d-none d-sm-flex
           align-items-center
           justify-content-sm-end
         "
       >
-        <span>Admin</span>
+        <a-button ghost class="mx-3">Đăng ký</a-button>
+        <!-- <a-button ghost>Đăng nhập</a-button> -->
+        <Login />
+      </div>
       </div>
 
-      <div
+      <!-- <div
         class="col-1 d-flex d-sm-none align-items-center justify-content-center"
       >
         <span @click="showDrawerUser()">
           <i class="fa-solid fa-user"></i>
         </span>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -62,12 +63,24 @@
   </a-drawer>
 </template>
 
+<style scoped>
+  .text-logo{
+    font-size: 25px;
+    font-weight: bold;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+  }
+
+</style>
+
 <script>
 import TheMenu from "../components/TheMenu.vue";
+import Login from "../components/Auth/Login.vue";
+
 import { defineComponent, ref } from "vue";
 export default defineComponent({
   components: {
     TheMenu,
+    Login
   },
   setup() {
     const visible = ref(false);
