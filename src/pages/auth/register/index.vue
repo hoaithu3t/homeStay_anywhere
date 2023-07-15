@@ -22,6 +22,10 @@
         <a-radio :value= 2>Other</a-radio>
       </a-radio-group>
     </a-form-item>
+    <a-form-item :name="['user', 'birthday']" label="Birthday" >
+      <a-date-picker v-model:value="formState.user.bir" />
+    </a-form-item>
+
 
     <a-form-item :name="['user', 'age']" label="Age" :rules="[{ type: 'number', min: 0, max: 99 }]">
       <a-input-number v-model:value="formState.user.age" />

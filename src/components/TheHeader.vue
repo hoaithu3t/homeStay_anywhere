@@ -36,8 +36,9 @@
           justify-content-sm-end
         "
       >
-        <a-button ghost class="mx-3">Đăng ký</a-button>
+        <Re />
         <!-- <a-button ghost>Đăng nhập</a-button> -->
+        <Register/>
         <Login />
       </div>
       </div>
@@ -75,12 +76,15 @@
 <script>
 import TheMenu from "../components/TheMenu.vue";
 import Login from "../components/Auth/Login.vue";
+import Register from "../components/Auth/Register.vue";
+
 
 import { defineComponent, ref } from "vue";
 export default defineComponent({
   components: {
     TheMenu,
-    Login
+    Login,
+    Register
   },
   setup() {
     const visible = ref(false);

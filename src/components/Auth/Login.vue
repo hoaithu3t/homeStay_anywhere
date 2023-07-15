@@ -1,6 +1,8 @@
 <template>
-  <a-button ghost @click="showModal">Đăng nhập</a-button>
+  <a-button ghost @click="showModal">Login</a-button>
   <a-modal v-model:visible="visible" @ok="onFinish" :footer="null">
+    <h1>Login</h1>
+    <p class="text-danger">{{ errorMesage }}</p>
      <a-form
     :model="formState"
     name="login-form"
@@ -10,11 +12,11 @@
     @finishFailed="onFinishFailed"
   >
     <a-form-item
-      label="Username"
-      name="username"
+      label="Email"
+      name="email"
       :rules="[{ required: true, message: 'Please input your username!' }]"
     >
-      <a-input v-model:value="formState.username">
+      <a-input v-model:value="formState.email">
         <template #prefix>
           <UserOutlined class="site-form-item-icon" />
         </template>
@@ -32,6 +34,7 @@
         </template>
       </a-input-password>
     </a-form-item>
+    <br/>
 
       <a-button :disabled="disabled" type="primary" html-type="submit">Log in</a-button>
   </a-form>
@@ -41,6 +44,7 @@
 <script>
 import { ref, defineComponent, reactive, computed } from 'vue';
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
+import { message } from 'ant-design-vue';
 
 export default defineComponent({
   components: {
@@ -49,24 +53,39 @@ export default defineComponent({
   },
   setup() {
     const visible = ref(false);
+    const errorMesage = ref('')
 
     const showModal = () => {
       visible.value = true;
     };
     const formState = reactive({
-      username: '',
+      email: '',
       password: '',
     });
     const onFinish = values => {
-      axios.post("http://127.0.0.1:8000/api/users", values)
+      axios.post("http://127.0.0.1:8000/api/login", values)
       .then((response) => {
-        if(response.status == 200) {
-          message.success("Tạo mới thành công!");
+        if(response.data.success) {
+          message.success(response.data.message);
+          visible.value= false;
         //   router.push({name: "admin-users"});
+        }
+        else{
+          message.error(response.data.message)
+          console.log('here here')
         }
       })
       .catch((error) => {
-        errors.value = error.response.data.errors;
+        if(error.response.status === 401){
+          errorMesage.value = "Email or password not correct";
+          message.error("Email or password not correct")
+        }
+        
+        else {
+          message.error("Some think error")
+        }
+        
+
       });
 
     };
@@ -74,7 +93,7 @@ export default defineComponent({
       console.log('Failed:', errorInfo);
     };
     const disabled = computed(() => {
-      return !(formState.username && formState.password);
+      return !(formState.email && formState.password);
     });
 
     
@@ -84,7 +103,8 @@ export default defineComponent({
       onFinishFailed,
       disabled,
       showModal,
-      visible
+      visible,
+      errorMesage
     };
   },
 });
