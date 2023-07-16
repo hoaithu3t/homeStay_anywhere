@@ -54,8 +54,8 @@ export default defineComponent({
         .then((response) => {
           if (response.data.success) {
             message.success(response.data.message);
-            useUser().onChangeName(response.data.data.name)
-            localStorage.setItem('userData', JSON.stringify(response.data.data))
+            useUser().onChange(response.data.data)
+            
             // console.log(useUser().id, 'user-info')
             visible.value = false;
             //   router.push({name: "admin-users"});

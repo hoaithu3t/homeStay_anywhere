@@ -31,13 +31,13 @@
           justify-content-sm-end
         ">
             <!-- <a-button ghost>Đăng nhập</a-button> -->
-            <div v-if="name === undefined">
+            <div v-if="userData === null">
               <Register />
               <Login />
             </div>
             <div v-else class="d-flex align-items-center">
               <div>
-                <h3 style="line-height: 30px; color: white;">Hello, {{ name }}</h3>
+                <h3 style="line-height: 30px; color: white;">Hello, {{ JSON.parse(userData).name }}</h3>
               </div>
               <SubMenu />
             </div>
@@ -82,7 +82,7 @@ import Register from "../components/Auth/Register.vue";
 import { useUser } from "../stores/use-user";
 import SubMenu from "./Auth/SubMenu.vue";
 
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref , toRefs} from "vue";
 import { storeToRefs } from "pinia";
 export default defineComponent({
   components: {
@@ -92,7 +92,10 @@ export default defineComponent({
     SubMenu
   },
   setup() {
-    const userStore = JSON.parse(localStorage.getItem('userData'));
+    const userStore = useUser();
+    // console.log(localStorage.getItem('userData'), 'hhhhhhhhhh');
+
+    // const userStore = JSON.parse(localStorage.getItem('userData'));
     const visible = ref(false);
     const visible_user = ref(false);
 
@@ -110,7 +113,8 @@ export default defineComponent({
       visible_user,
       showDrawer,
       showDrawerUser,
-      name: userStore?.name || undefined,
+      // name: userStore?.name || undefined,
+      ...toRefs(userStore)
     };
   },
 });

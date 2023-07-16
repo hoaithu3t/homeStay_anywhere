@@ -2,15 +2,13 @@ import { defineStore } from 'pinia'
 
 export const useUser = defineStore('userId', {
   state: () => ({
-      id: null,
-      role: null,
-      name: null,
-      token: null,
+      userData : localStorage.getItem('userData')
   }),
 
   actions: {
-    onChangeName(name) {
-      this.name = name;
+    onChange(data) {
+      localStorage.setItem('userData', JSON.stringify(data))
+      this.userData = JSON.stringify(data);
     },
   }
 })
