@@ -31,7 +31,7 @@
           justify-content-sm-end
         ">
             <!-- <a-button ghost>Đăng nhập</a-button> -->
-            <div v-if="name === null">
+            <div v-if="name === undefined">
               <Register />
               <Login />
             </div>
@@ -110,7 +110,7 @@ export default defineComponent({
       visible_user,
       showDrawer,
       showDrawerUser,
-      ...userStore
+      name: userStore?.name || undefined,
     };
   },
 });
