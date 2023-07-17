@@ -22,6 +22,11 @@
                             User Manager
                         </a>
                     </a-menu-item>
+                    <a-menu-item>
+                        <a @click="logout">
+                            Logout
+                        </a>
+                    </a-menu-item>
                 </a-menu>
             </template>
         </a-dropdown>
@@ -43,16 +48,18 @@
 
 
 <script>
-// export default defineComponent({
-//     components: {
-//         UserOutlined
-//     },
-//     // setup() {
-//     //     const store = useMenu();
+import { defineComponent } from 'vue';
+import { useUser } from '../../stores/use-user';
 
-//     //     return {
-//     //         ...storeToRefs(store),
-//     //     };
-//     // },
-// });
+export default defineComponent({
+    setup() {
+        const logout = () => {
+            useUser().onChange(undefined)
+        }
+
+        return {
+            logout
+        };
+    },
+});
 </script>

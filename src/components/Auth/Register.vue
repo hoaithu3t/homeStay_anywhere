@@ -1,10 +1,9 @@
 <template>
-  <a-button ghost @click="showModal" class="mx-3">Register</a-button>
-  <a-modal v-model:visible="visible" @ok="onFinish" :footer="null">
-    <h1>Register</h1>
-    <p class="text-danger">{{ errorMesage }}</p>
-    <a-form :model="formState" v-bind="layout" name="nest-messages" :validate-messages="validateMessages"
-      @finish="onFinish">
+  <a-button ghost @click="setShowRegister(true)" class="mx-3">Register</a-button>
+  <a-modal :visible="showRegister" @ok="onFinish" @cancel="setShowRegister(false)" :footer="null" :width="600">
+    <h1 class="text-center mb-4">Register</h1>
+    <a-form :model="formState" :label-col="{ span: 7 }" :wrapper-col="{ span: 17 }" name="nest-messages"
+      :validate-messages="validateMessages" @finish="onFinish" class="px-4">
       <a-form-item name="name" label="Name" :rules="[{ required: true }]">
         <a-input v-model:value="formState.name" />
       </a-form-item>
@@ -38,10 +37,13 @@
         :rules="[{ required: true, message: 'Please input your password!' }]">
         <a-input-password v-model:value="formState.c_password" />
       </a-form-item>
-
-      <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
+      <p class="text-danger">{{ errorMesage }}</p>
+      <div class="d-flex justify-content-between">
+        <p class="fst-italic text-center">You already have an account, log in
+          <a @click="changeModalLogin">here</a>
+        </p>
         <a-button type="primary" html-type="submit">Submit</a-button>
-      </a-form-item>
+      </div>
     </a-form>
   </a-modal>
 </template>
@@ -57,9 +59,14 @@ export default defineComponent({
     UserOutlined,
     LockOutlined,
   },
-  setup() {
-    const visible = ref(false);
+  props: ["showRegister", "setShowLogin", "setShowRegister"],
+  setup({ setShowLogin, setShowRegister }) {
+
     const errorMesage = ref('')
+    const changeModalLogin = () => {
+      setShowRegister(false);
+      setShowLogin(true)
+    }
 
     const showModal = () => {
       visible.value = true;
@@ -129,9 +136,9 @@ export default defineComponent({
       layout,
       validateMessages,
       showModal,
-      visible,
       errorMesage,
-      dateFormat
+      dateFormat,
+      changeModalLogin
     };
   },
 });

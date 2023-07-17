@@ -31,9 +31,9 @@
           justify-content-sm-end
         ">
             <!-- <a-button ghost>Đăng nhập</a-button> -->
-            <div v-if="userData === null">
-              <Register />
-              <Login />
+            <div v-if="userData === null || userData === undefined">
+              <Register :showRegister="showRegister" :setShowLogin="setShowLogin" :setShowRegister="setShowRegister" />
+              <Login :showLogin="showLogin" :setShowLogin="setShowLogin" :setShowRegister="setShowRegister" />
             </div>
             <div v-else class="d-flex align-items-center">
               <div>
@@ -44,27 +44,9 @@
 
           </div>
         </div>
-
-        <!-- <div
-        class="col-1 d-flex d-sm-none align-items-center justify-content-center"
-      >
-        <span @click="showDrawerUser()">
-          <i class="fa-solid fa-user"></i>
-        </span>
-      </div> -->
       </div>
     </div>
   </div>
-
-  <!-- <a-drawer v-model:visible="visible" title="DANH MỤC" placement="left">
-    <TheMenu />
-  </a-drawer>
-
-  <a-drawer v-model:visible="visible_user" title="ADMIN" placement="right">
-    <p>Some contents...</p>
-    <p>Some contents...</p>
-    <p>Some contents...</p>
-  </a-drawer> -->
 </template>
 
 <style scoped>
@@ -82,8 +64,7 @@ import Register from "../components/Auth/Register.vue";
 import { useUser } from "../stores/use-user";
 import SubMenu from "./Auth/SubMenu.vue";
 
-import { defineComponent, ref , toRefs} from "vue";
-import { storeToRefs } from "pinia";
+import { defineComponent, ref, toRefs } from "vue";
 export default defineComponent({
   components: {
     TheMenu,
@@ -93,28 +74,27 @@ export default defineComponent({
   },
   setup() {
     const userStore = useUser();
-    // console.log(localStorage.getItem('userData'), 'hhhhhhhhhh');
-
-    // const userStore = JSON.parse(localStorage.getItem('userData'));
-    const visible = ref(false);
     const visible_user = ref(false);
+    const showLogin = ref(false);
+    const showRegister = ref(false);
+
+    const setShowLogin = (value) => {
+      showLogin.value = value;
+    }
+
+    const setShowRegister = (value) => {
+      showRegister.value = value;
+    }
 
 
-    const showDrawer = () => {
-      visible.value = true;
-    };
-
-    const showDrawerUser = () => {
-      visible_user.value = true;
-    };
 
     return {
-      visible,
       visible_user,
-      showDrawer,
-      showDrawerUser,
-      // name: userStore?.name || undefined,
-      ...toRefs(userStore)
+      ...toRefs(userStore),
+      showLogin,
+      showRegister,
+      setShowLogin,
+      setShowRegister,
     };
   },
 });

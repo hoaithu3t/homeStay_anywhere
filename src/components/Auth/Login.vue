@@ -1,9 +1,8 @@
 <template>
-  <a-button ghost @click="showModal">Login</a-button>
-  <a-modal v-model:visible="visible" @ok="onFinish" :footer="null">
+  <a-button ghost @click="setShowLogin(true)">Login</a-button>
+  <a-modal :visible="showLogin" @ok="onFinish" :footer="null" @cancel="setShowLogin(false)">
     <h1>Login</h1>
-    <p class="text-danger">{{ errorMesage }}</p>
-    <a-form :model="formState" name="login-form" layout="inline" autocomplete="off" @finish="onFinish"
+    <a-form :label-col="{ span: 6 }" :wrapper-col="{ span: 14 }" :model="formState" name="login-form" @finish="onFinish"
       @finishFailed="onFinishFailed">
       <a-form-item label="Email" name="email" :rules="[{ required: true, message: 'Please input your username!' }]">
         <a-input v-model:value="formState.email">
@@ -21,8 +20,15 @@
         </a-input-password>
       </a-form-item>
       <br />
+      <p class="text-danger">{{ errorMesage }}</p>
 
-      <a-button :disabled="disabled" type="primary" html-type="submit">Log in</a-button>
+
+      <div class="d-flex justify-content-between">
+        <p class="fst-italic">You don't have an account, register
+          <a @click="changeModalRegister">here</a>
+        </p>
+        <a-button :disabled="disabled" type="primary" html-type="submit">Log in</a-button>
+      </div>
     </a-form>
   </a-modal>
 </template>
@@ -38,13 +44,14 @@ export default defineComponent({
     UserOutlined,
     LockOutlined,
   },
-  setup() {
-    const visible = ref(false);
+  props: ["showLogin", "setShowLogin", "setShowRegister"],
+  setup({ setShowLogin, setShowRegister }) {
     const errorMesage = ref('')
+    const changeModalRegister = () => {
+      setShowLogin(false);
+      setShowRegister(true);
+    }
 
-    const showModal = () => {
-      visible.value = true;
-    };
     const formState = reactive({
       email: '',
       password: '',
@@ -55,9 +62,9 @@ export default defineComponent({
           if (response.data.success) {
             message.success(response.data.message);
             useUser().onChange(response.data.data)
-            
+
             // console.log(useUser().id, 'user-info')
-            visible.value = false;
+            setShowLogin(false);
             //   router.push({name: "admin-users"});
           }
 
@@ -92,9 +99,8 @@ export default defineComponent({
       onFinish,
       onFinishFailed,
       disabled,
-      showModal,
-      visible,
-      errorMesage
+      errorMesage,
+      changeModalRegister
     };
   },
 });

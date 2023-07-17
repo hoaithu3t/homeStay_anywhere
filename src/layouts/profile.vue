@@ -1,7 +1,8 @@
 <template>
   <TheHeader />
 
-  <a-form :model="formState" @finish="onFinish" name="nest-messages" :validate-messages="validateMessages">
+  <a-form :model="formState" @finish="onFinish" name="nest-messages" :validate-messages="validateMessages"
+    :label-col="{ span: 4 }" :wrapper-col="{ span: 16 }">
     <a-card title="My profile" style="width: 100%">
       <div class="row mb-3">
         <div class="col-12 col-sm-4 mb-3">
