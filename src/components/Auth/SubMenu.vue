@@ -11,11 +11,12 @@
                             </span>
                         </router-link>
                     </a-menu-item>
-
                     <a-menu-item>
-                        <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-                            HomeStay Manager
-                        </a>
+                        <router-link :to="{ name: 'homestays' }">
+                            <span>
+                                Homestay
+                            </span>
+                        </router-link>
                     </a-menu-item>
                     <a-menu-item>
                         <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">

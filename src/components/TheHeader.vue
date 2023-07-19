@@ -1,5 +1,5 @@
 <template>
-  <div style="background: linear-gradient(56deg, rgba(255,140,0,1) 0%, rgba(255,169,0,1) 81%);">
+  <div style="background: linear-gradient(56deg, rgba(255,140,0,1) 0%, rgba(255,169,0,1) 81%)">
     <div class="container">
       <div class="row text-white py-3">
         <!-- <div
@@ -9,7 +9,7 @@
           <i class="fa-solid fa-align-justify"></i>
         </span>
       </div> -->
-        <div class="d-flex container align-items-center justify-content-between px-5">
+        <div class="d-flex container align-items-center justify-content-between">
           <div class="
         d-flex
           align-items-center
