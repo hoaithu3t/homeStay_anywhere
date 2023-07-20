@@ -53,10 +53,10 @@
       <div class="section top-destinations" style="">
         <div class="py-2">Top destinations in Vietnam</div>
         <div class="mt-4 d-flex justify-content-between">
-          <a href="" class="destination" v-for="location in locations.slice(0, 7)">
+          <a href="" class="destination" v-for="location in topLocations">
             <img :src="'http://localhost:8000/storage/' + location.thumbnail"
               style="width: 124px; height: 124px; border-radius: 50%;" />
-            <p class="destination-name mt-2">{{ location.label }}</p>
+            <p class="destination-name mt-2">{{ location.name }}</p>
           </a>
 
         </div>
@@ -102,6 +102,7 @@ export default {
 
     const locations = ref([]);
     const location_id = ref(null);
+    const topLocations = ref([])
 
     const adults = ref(1);
     const child = ref(0);
@@ -122,15 +123,29 @@ export default {
     const filterOption = (input, option) => {
       return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
     };
+    const getTopLocations = () => {
+      axios.get("http://127.0.0.1:8000/api/top-locations")
+        .then((response) => {
+          // console.log(response);
+          topLocations.value = response.data.data;
+          // users_status.value = response.data.users_status;
+          // departments.value = response.data.departments;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     const disabledDate = current => {
       // Can not select days before today and today
       return current && current < dayjs().startOf('day');
     };
     getLocations();
+    getTopLocations();
     return {
       target,
       locations,
       location_id,
+      topLocations,
       filterOption,
       date: ref(),
       disabledDate,
