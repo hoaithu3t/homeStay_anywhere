@@ -25,8 +25,8 @@
       </a-form-item>
       <a-form-item name="role" label="Role" :rules="[{ type: 'number' }]">
         <a-radio-group v-model:value="formState.role">
-          <a-radio :value=1>Owner</a-radio>
-          <a-radio :value=2>Customer</a-radio>
+          <a-radio :value=1>Customer</a-radio>
+          <a-radio :value=2>Owner</a-radio>
         </a-radio-group>
       </a-form-item>
 
@@ -68,10 +68,6 @@ export default defineComponent({
       setShowLogin(true)
     }
 
-    const showModal = () => {
-      visible.value = true;
-    };
-
     const layout = {
       labelCol: {
         span: 8,
@@ -107,8 +103,8 @@ export default defineComponent({
         .then((response) => {
           if (response.data.success) {
             message.success(response.data.message);
-            visible.value = false;
-            useUser().onChangeName(response.data.data.name)
+            setShowRegister(false);
+            useUser().onChange(response.data.data)
             //   router.push({name: "admin-users"});
           }
           else {
@@ -135,7 +131,6 @@ export default defineComponent({
       onFinish,
       layout,
       validateMessages,
-      showModal,
       errorMesage,
       dateFormat,
       changeModalLogin

@@ -5,7 +5,6 @@ const admin = [
     name: "home",
   },
   {
-
     path: "/admin",
     component: () => import("../layouts/admin.vue"),
     children: [
@@ -50,31 +49,46 @@ const admin = [
     path: "/homestays",
     component: () => import("../layouts/homestays/index.vue"),
     name: "homestays",
+    children: [
+      {
+        path: "homestays/create",
+        name: "homestays-create",
+        component: () => import("../layouts/homestays/create.vue"),
+      },
+      {
+        path: "homestays/:id/edit",
+        name: "homestays-edit",
+        component: () => import("../layouts/homestays/edit.vue"),
+      },
+      {
+        path: "homstays/:id/rooms",
+        component: () => import("../layouts/rooms/index.vue"),
+        name: "rooms",
+      },
+      {
+        path: "homstays/:id/rooms/create",
+        name: "rooms-create",
+        component: () => import("../layouts/rooms/create.vue"),
+      },
+    ],
   },
-  {
-    path: "/homestays/create",
-    name: "homestays-create",
-    component: () => import("../layouts/homestays/create.vue"),
-  },
-  {
-    path: "/homestays/:id/edit",
-    name: "homestays-edit",
-    component: () => import("../layouts/homestays/edit.vue"),
-  },
-  {
-    path: "/homstays/:id/rooms",
-    component: () => import("../layouts/rooms/index.vue"),
-    name: "rooms",
-  },
-  {
-    path: "/homstays/:id/rooms/create",
-    name: "rooms-create",
-    component: () => import("../layouts/rooms/create.vue"),
-  },
+
   {
     path: "/rooms/:id/edit",
     name: "rooms-edit",
     component: () => import("../layouts/rooms/edit.vue"),
+  },
+  {
+    path: "/users",
+    component: () => import("../layouts/users/index.vue"),
+    name: "user-manager",
+    children: [
+      {
+        path: "create",
+        component: () => import("../layouts/home.vue"),
+        name: "user-create",
+      },
+    ],
   },
 ];
 

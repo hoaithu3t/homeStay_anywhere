@@ -1,11 +1,11 @@
 <template>
   <TheHeader />
 
-  <a-card class="container mt-5" title="Homestay List" style="width: 100%">
+  <a-card class="container mt-5" title="User List" style="width: 100%">
     <div class="row mb-3">
       <div class="col-12 d-flex justify-content-end">
         <a-button type="primary">
-          <router-link :to="{ name: 'homestays-create' }">
+          <router-link :to="{ name: 'user-create' }">
             <i class="fa-solid fa-plus"></i>
           </router-link>
         </a-button>
@@ -14,7 +14,7 @@
 
     <div class="row">
       <div class="col-12">
-        <a-table :dataSource="homestays" :columns="columns" :scroll="{ x: 576 }">
+        <a-table :dataSource="users" :columns="columns" :scroll="{ x: 576 }">
           <template #bodyCell="{ column, index, record }">
             <template v-if="column.key === 'index'">
               <span>{{ index + 1 }}</span>
@@ -30,7 +30,7 @@
             </template>
 
             <template v-if="column.key === 'action'">
-              <router-link :to="{ name: 'homestays-edit', params: { id: record.id } }">
+              <router-link :to="{ name: 'rooms-edit', params: { id: record.id } }">
                 <a-button type="primary">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </a-button>
@@ -55,7 +55,7 @@
 <script>
 import TheHeader from "../../components/TheHeader.vue";
 import { defineComponent, ref } from "vue";
-
+import { useRoute } from 'vue-router';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import { createVNode } from 'vue';
 import { Modal, message } from 'ant-design-vue';
@@ -66,7 +66,8 @@ export default defineComponent({
     TheHeader,
   },
   setup() {
-    const homestays = ref([]);
+    const route = useRoute();
+    const users = ref([]);
     const columns = [
       {
         title: "#",
@@ -78,52 +79,62 @@ export default defineComponent({
         key: "name",
       },
       {
-        title: "Location",
-        dataIndex: "location_name",
-        key: "location_name",
+        title: "Email",
+        dataIndex: "email",
+        key: "email",
       },
       {
-        title: "Address",
-        dataIndex: "address",
-        key: "address",
+        title: "Phone number",
+        dataIndex: "phone_number",
+        key: "phone_number",
       },
       {
-        title: "Description",
-        dataIndex: "desc",
-        key: "desc",
-        // responsive: ["sm"],
+        title: "Gender",
+        dataIndex: "gender",
+        key: "gender",
+        customRender: ({ value }) => {
+          console.log(value, 'value-user-check')
+          if (value === 0) return "Male";
+          else if (value === 1) return "Female";
+          else return "Other";
+        }
       },
-      // {
-      //   title: "Vai trò",
-      //   key: "roles",
-      // },
-      // {
-      //   title: "Tình trạng",
-      //   dataIndex: "status",
-      //   key: "status",
-      // },
       {
-        title: "Công cụ",
-        key: "action",
-        fixed: "right",
+        title: "Birthday",
+        dataIndex: "birthday",
+        key: "birthday",
+      },
+      {
+        title: "Role",
+        dataIndex: "role",
+        key: "role",
+        customRender: ({ value }) => {
+          if (value === 0) return "Admin";
+          else if (value === 1) return "Customer";
+          else return "Owner";
+        }
       },
     ];
-    const getHomestays = () => {
+    const getUsers = () => {
       axios
-        .get(`http://127.0.0.1:8000/api/homestays?user_id=${JSON.parse(localStorage.getItem('userData')).id}`)
+        .get(`http://127.0.0.1:8000/api/users`, {
+          headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('userData')).token}`
+          }
+        })
         .then((response) => {
-          // console.log(response);
-          homestays.value = response.data.data;
+          console.log(response);
+          users.value = response.data.data;
         })
         .catch((error) => {
           console.log(error);
         });
     };
 
-    getHomestays();
+    getUsers();
     const showConfirm = (id) => {
       Modal.confirm({
-        title: 'Do you want to delete this homestay?',
+        title: 'Do you want to delete this room?',
         icon: createVNode(ExclamationCircleOutlined),
         content: createVNode('div', {
           style: 'color:red;',
@@ -131,7 +142,7 @@ export default defineComponent({
         onOk() {
           console.log('OK');
 
-          axios.delete(`http://127.0.0.1:8000/api/homestays/${id}`, {
+          axios.delete(`http://127.0.0.1:8000/api/rooms/${id}`, {
             headers: {
               'Authorization': `Bearer ${JSON.parse(localStorage.getItem('userData')).token}`
             }
@@ -139,7 +150,7 @@ export default defineComponent({
             // xử trí khi thành công
             console.log(response);
             message.success(response.data.message);
-            getHomestays();
+            getRooms();
 
           })
             .catch(function (error) {
@@ -155,9 +166,10 @@ export default defineComponent({
     };
 
     return {
-      homestays,
+      users,
       columns,
       showConfirm,
+      route,
     };
   },
 });
