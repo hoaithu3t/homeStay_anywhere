@@ -10,21 +10,14 @@
         </span>
       </div> -->
         <div class="d-flex container align-items-center justify-content-between">
-          <div class="
-        d-flex
-          align-items-center
-          justify-content-center justify-content-sm-start
-        ">
-            <!-- <img
-          src="../assets/logo.png"
-          alt="Logo"
-          height="32"
-          width="34"
-          class="ms-3 me-3"
-        /> -->
-            <i class="fas fa-home" style="width: 30px; font-size: 20px;"></i>
-            <span class="d-none d-sm-flex text-logo">Anywhere</span>
-          </div>
+          <router-link :to="{ name: 'home' }">
+            <div class="d-flex align-items-center justify-content-center text-white">
+              <i class="fas fa-home" style="width: 30px; font-size: 20px;"></i>
+              <span class="d-none d-sm-flex text-logo">Anywhere</span>
+
+            </div>
+          </router-link>
+
 
           <div class="
           align-items-center

@@ -74,7 +74,7 @@
 
     </div>
     <div class="picture">
-      <img  src="../assets/hinh-anh-bien-dep_1.jpg" style="width: 100%; height: 500px; object-fit: cover;" />
+      <img src="../assets/hinh-anh-bien-dep_1.jpg" style="width: 100%; height: 500px; object-fit: cover;" />
       <div class="picture-text">To travel is to live</div>
     </div>
   </div>
@@ -186,8 +186,9 @@ export default {
 .btn-search {
   border-color: white white white #d9d9d9 !important;
 }
-.section{
-  padding: 40px 0 ; 
+
+.section {
+  padding: 40px 0;
   text-align: center;
   font-size: 24px;
   color: #181a25;
@@ -203,10 +204,12 @@ export default {
 .destination-name {
   font-size: 14px;
 }
-.picture{
+
+.picture {
   position: relative;
 }
-.picture-text{
+
+.picture-text {
   position: absolute;
   top: 50%;
   left: 50%;

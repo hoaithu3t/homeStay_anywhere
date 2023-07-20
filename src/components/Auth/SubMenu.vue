@@ -1,7 +1,9 @@
 <template>
     <div id="components-dropdown-demo-placement">
         <a-dropdown placement="bottomRight">
-            <img src="/Avatar.jpg" class="img-avt mx-3">
+            <img v-if="JSON.parse(userData).avatar" :src="'http://localhost:8000/storage/' + JSON.parse(userData).avatar"
+                alt="avatar" class="img-avt mx-3" />
+            <img v-else src="/Avatar.jpg" class="img-avt mx-3">
             <template #overlay>
                 <a-menu>
                     <a-menu-item key="profile">
@@ -11,16 +13,23 @@
                             </span>
                         </router-link>
                     </a-menu-item>
-                    <a-menu-item>
+                    <a-menu-item v-if="JSON.parse(userData).role === 2">
                         <router-link :to="{ name: 'homestays' }">
                             <span>
-                                Homestay
+                                My homestays
+                            </span>
+                        </router-link>
+                    </a-menu-item>
+                    <a-menu-item v-if="JSON.parse(userData).role === 0">
+                        <router-link :to="{ name: 'user-manager' }">
+                            <span>
+                                User Manager
                             </span>
                         </router-link>
                     </a-menu-item>
                     <a-menu-item>
-                        <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-                            User Manager
+                        <a>
+                            Settings
                         </a>
                     </a-menu-item>
                     <a-menu-item>
@@ -49,17 +58,19 @@
 
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, toRefs } from 'vue';
 import { useUser } from '../../stores/use-user';
 
 export default defineComponent({
     setup() {
+        const userStore = useUser();
         const logout = () => {
             useUser().onChange(undefined)
         }
 
         return {
-            logout
+            logout,
+            ...toRefs(userStore),
         };
     },
 });
