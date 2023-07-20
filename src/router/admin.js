@@ -1,6 +1,6 @@
 const admin = [
   {
-    path: "/home",
+    path: "/",
     component: () => import("../layouts/home.vue"),
     name: "home",
   },
