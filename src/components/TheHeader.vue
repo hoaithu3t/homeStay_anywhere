@@ -1,5 +1,5 @@
 <template>
-  <div style="background: linear-gradient(56deg, rgba(255,140,0,1) 0%, rgba(255,169,0,1) 81%)">
+  <div class="background-gradient">
     <div class="container">
       <div class="row text-white py-3">
         <!-- <div
@@ -14,11 +14,8 @@
             <div class="d-flex align-items-center justify-content-center text-white">
               <i class="fas fa-home" style="width: 30px; font-size: 20px;"></i>
               <span class="d-none d-sm-flex text-logo">Anywhere</span>
-
             </div>
           </router-link>
-
-
           <div class="
           align-items-center
           justify-content-sm-end

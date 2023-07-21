@@ -70,7 +70,6 @@ const admin = [
     name: "rooms-create",
     component: () => import("../layouts/rooms/create.vue"),
   },
-
   {
     path: "/rooms/:id/edit",
     name: "rooms-edit",
@@ -80,13 +79,11 @@ const admin = [
     path: "/users",
     component: () => import("../layouts/users/index.vue"),
     name: "user-manager",
-    children: [
-      {
-        path: "create",
-        component: () => import("../layouts/home.vue"),
-        name: "user-create",
-      },
-    ],
+  },
+  {
+    path: "/users/create",
+    component: () => import("../layouts/users/create.vue"),
+    name: "user-create",
   },
 ];
 

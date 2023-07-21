@@ -1,7 +1,7 @@
 <template>
   <TheHeader />
   <!-- <img src="../assets/bien.jpg" style="width: 100%; height: 320px; object-fit: cover;" /> -->
-  <div class="" style="background: linear-gradient(56deg, rgb(255, 140, 0) 0%, rgb(255, 169, 0) 81%); height: 264px;">
+  <div class="background-gradient" style="height: 264px;">
     <div class="container">
       <div class="" style="padding: 32px 0 36px;">
         <h1 class="text-white" style="font-size: 38px;">Tìm chỗ nghỉ tiếp theo</h1>
@@ -120,7 +120,7 @@
               </div>
             </div>
           </div>
-          
+
 
         </div>
 
@@ -129,7 +129,7 @@
 
     </div>
     <div class="picture">
-      <img src="../assets/hinh-anh-bien-dep_1.jpg" style="width: 100%; height: 500px; object-fit: cover;" />
+      <img src="../assets/banner1.jpg" style="width: 100%; height: 300px; object-fit: cover;" />
       <div class="picture-text">To travel is to live</div>
     </div>
   </div>
