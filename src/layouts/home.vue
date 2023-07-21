@@ -51,7 +51,7 @@
   <div class="content">
     <div class="container">
       <div class="section top-destinations" style="">
-        <div class="py-2">Top destinations in Vietnam</div>
+        <div class="section-title py-2">Top destinations in Vietnam</div>
         <div class="mt-4 d-flex justify-content-between">
           <a href="" class="destination" v-for="location in topLocations">
             <img :src="'http://localhost:8000/storage/' + location.thumbnail"
@@ -62,14 +62,69 @@
         </div>
       </div>
       <div class="section top-homestays " style="padding: 40px 0 ; text-align: center;">
-        <div class="py-2">Top homestays recommended for you</div>
-        <div class="mt-4 d-flex justify-content-between">
-          <a href="" class="destination" v-for="location in locations.slice(0, 7)">
-            <img :src="'http://localhost:8000/storage/' + location.thumbnail"
-              style="width: 124px; height: 124px; border-radius: 50%;" />
-            <p class="destination-name mt-2">{{ location.label }}</p>
-          </a>
+        <div class="section-title pb-3">Top homestays recommended for you</div>
+
+
+        <div class="d-flex flex-wrap justify-content-between">
+          <div v-for="homestay in topHomestays.slice(0, 4)" class="top-homestay">
+            <img class="top-homestay-img" src="http://127.0.0.1:8000/storage/locations/check-in-hue-1.jpg" />
+            <div class="d-flex flex-column justify-content-between p-2 " style="height: 126px;">
+              <div>
+                <h4 class="top-homestay-name mb-0">{{ homestay.name }}</h4>
+                <div class="top-homestay-location d-flex align-items-center">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <span class="ms-2">{{ homestay.location_name }}</span>
+                </div>
+                <div v-if="homestay.countz > 0" class="d-flex align-items-center mt-1">
+                  <div class="d-flex justify-content-center  align-items-center top-homestay-point me-1">{{
+                    homestay.pointz }}
+                  </div>
+                  <div v-if="homestay.pointz >= 9.5" class="me-1" style="color: var(--bold);">Xuất sắc - </div>
+                  <div v-else-if="homestay.pointz >= 9" class="me-1" style="color: var(--bold);">Tuyệt vời - </div>
+                  <div v-else-if="homestay.pointz >= 8.5" class="me-1" style="color: var(--bold);">Rất tốt - </div>
+                  <div v-else-if="homestay.pointz >= 8" class="me-1" style="color: var(--bold);">Tốt - </div>
+                  <div style="color: var(--light);">{{ homestay.countz }} đánh giá</div>
+                </div>
+                <div v-else class="text-start">Chưa có đánh giá</div>
+              </div>
+              <div class="top-homestay-price d-flex justify-content-end mt-2">
+                <div>VND {{ formatMoney(homestay.min_price) }}</div>
+              </div>
+            </div>
+          </div>
         </div>
+        <div class="d-flex flex-wrap justify-content-between">
+          <div v-for="homestay in topHomestays.slice(4)" class="top-homestay">
+            <img class="top-homestay-img" src="http://127.0.0.1:8000/storage/locations/check-in-hue-1.jpg" />
+            <div class="d-flex flex-column justify-content-between p-2 " style="height: 126px;">
+              <div>
+                <h4 class="top-homestay-name mb-0">{{ homestay.name }}</h4>
+                <div class="top-homestay-location d-flex align-items-center">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <span class="ms-2">{{ homestay.location_name }}</span>
+                </div>
+                <div v-if="homestay.countz > 0" class="d-flex align-items-center mt-1">
+                  <div class="d-flex justify-content-center  align-items-center top-homestay-point me-1">{{
+                    homestay.pointz }}
+                  </div>
+                  <div v-if="homestay.pointz >= 9.5" class="me-1" style="color: var(--bold);">Xuất sắc - </div>
+                  <div v-else-if="homestay.pointz >= 9" class="me-1" style="color: var(--bold);">Tuyệt vời - </div>
+                  <div v-else-if="homestay.pointz >= 8.5" class="me-1" style="color: var(--bold);">Rất tốt - </div>
+                  <div v-else-if="homestay.pointz >= 8" class="me-1" style="color: var(--bold);">Tốt - </div>
+                  <div style="color: var(--light);">{{ homestay.countz }} đánh giá</div>
+                </div>
+                <div v-else class="text-start">Chưa có đánh giá</div>
+              </div>
+              <div class="top-homestay-price d-flex justify-content-end mt-2">
+                <div>VND {{ formatMoney(homestay.min_price) }}</div>
+              </div>
+            </div>
+          </div>
+          
+
+        </div>
+
+
       </div>
 
     </div>
@@ -97,12 +152,15 @@ export default {
     RightCircleOutlined,
   },
   setup() {
+    // console.log('localstre1', JSON.parse(localStorage.getItem('userData')));
+    // console.log('localstre2', JSON.parse(localStorage.getItem('userData')).avatar);
     const target = ref(null);
     onClickOutside(target, (event) => isShow.value = false)
 
     const locations = ref([]);
     const location_id = ref(null);
     const topLocations = ref([])
+    const topHomestays = ref([])
 
     const adults = ref(1);
     const child = ref(0);
@@ -135,17 +193,35 @@ export default {
           console.log(error);
         });
     };
+    const getTopHomestays = () => {
+      axios.get("http://127.0.0.1:8000/api/top-homestays")
+        .then((response) => {
+          // console.log(response);
+          topHomestays.value = response.data.data;
+          // users_status.value = response.data.users_status;
+          // departments.value = response.data.departments;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    const formatMoney = (value) => {
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    }
     const disabledDate = current => {
       // Can not select days before today and today
       return current && current < dayjs().startOf('day');
     };
     getLocations();
     getTopLocations();
+    getTopHomestays();
     return {
       target,
       locations,
       location_id,
       topLocations,
+      topHomestays,
+      formatMoney,
       filterOption,
       date: ref(),
       disabledDate,
@@ -157,68 +233,10 @@ export default {
     }
   }
 };
-</script>]
+</script>
 
-<style>
-#components-dropdown-demo-placement .ant-btn {
-  margin-right: 8px;
-  margin-bottom: 8px;
-}
-
-.search-item {
-  height: 100%;
-  border-radius: 3px;
-}
-
-.dropdown {
-  position: relative;
-}
-
-.dropdown-content {
-  position: absolute;
-  width: 100%;
-  height: 250px;
-  padding: 32px;
-  background-color: white;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-}
-
-.btn-search {
-  border-color: white white white #d9d9d9 !important;
-}
-
-.section {
-  padding: 40px 0;
-  text-align: center;
-  font-size: 24px;
-  color: #181a25;
-}
-
-
-
-.destination {
-  color: #646262;
-  /* margin-right: 42px; */
-}
-
-.destination-name {
-  font-size: 14px;
-}
-
-.picture {
-  position: relative;
-}
-
-.picture-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 100px;
-  font-weight: bold;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  color: white;
-}
+<style scoped>
+@import "../assets/css/home.css";
 </style>
 
   

@@ -1,0 +1,96 @@
+#components-dropdown-demo-placement .ant-btn {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.search-item {
+  height: 100%;
+  border-radius: 3px;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  position: absolute;
+  width: 100%;
+  height: 250px;
+  padding: 32px;
+  background-color: white;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.btn-search {
+  border-color: white white white #d9d9d9 !important;
+}
+
+.section {
+  padding: 40px 0;
+  text-align: center;
+  color: #181a25;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--bold);
+}
+
+
+.destination {
+  color: #646262;
+  /* margin-right: 42px; */
+}
+
+.destination-name {
+  font-size: 14px;
+}
+
+.top-homestay {
+    flex: 1;
+    margin: 8px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 3px;
+}
+
+.top-homestay-img {
+  width: 100%;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.top-homestay-name{
+  text-align: start;
+  font-size: 16px;
+  color: var(--bold);
+}
+.top-homestay-location{
+  color: var(--light);
+}
+.top-homestay-point{
+    background-color: orange;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 3px 3px 3px 0;
+    
+}
+.top-homestay-price{
+    color: var(--bold);
+    font-size: 16px;
+    font-weight: 500;
+}
+.picture {
+  position: relative;
+}
+
+.picture-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 100px;
+  font-weight: bold;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+}

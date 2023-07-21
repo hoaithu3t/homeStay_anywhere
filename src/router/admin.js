@@ -49,28 +49,26 @@ const admin = [
     path: "/homestays",
     component: () => import("../layouts/homestays/index.vue"),
     name: "homestays",
-    children: [
-      {
-        path: "homestays/create",
-        name: "homestays-create",
-        component: () => import("../layouts/homestays/create.vue"),
-      },
-      {
-        path: "homestays/:id/edit",
-        name: "homestays-edit",
-        component: () => import("../layouts/homestays/edit.vue"),
-      },
-      {
-        path: "homstays/:id/rooms",
-        component: () => import("../layouts/rooms/index.vue"),
-        name: "rooms",
-      },
-      {
-        path: "homstays/:id/rooms/create",
-        name: "rooms-create",
-        component: () => import("../layouts/rooms/create.vue"),
-      },
-    ],
+  },
+  {
+    path: "/homestays/create",
+    name: "homestays-create",
+    component: () => import("../layouts/homestays/create.vue"),
+  },
+  {
+    path: "/homestays/:id/edit",
+    name: "homestays-edit",
+    component: () => import("../layouts/homestays/edit.vue"),
+  },
+  {
+    path: "/homstays/:id/rooms",
+    component: () => import("../layouts/rooms/index.vue"),
+    name: "rooms",
+  },
+  {
+    path: "/homstays/:id/rooms/create",
+    name: "rooms-create",
+    component: () => import("../layouts/rooms/create.vue"),
   },
 
   {

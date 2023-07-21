@@ -11,4 +11,9 @@
     color: orange;
     border-color: orange;
 }
+:root{
+    --bold : #262626;
+    --light : #6b6b6b
+}
 </style>
+
