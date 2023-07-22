@@ -30,7 +30,7 @@
             </template>
 
             <template v-if="column.key === 'action'">
-              <router-link :to="{ name: 'rooms-edit', params: { id: record.id } }">
+              <router-link :to="{ name: 'user-update', params: { id: record.id } }">
                 <a-button type="primary">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </a-button>
@@ -40,9 +40,6 @@
               <a-button type="primary" class="ms-3" @click="showConfirm(record.id)">
                 <i class="fa-solid fa-trash"></i>
               </a-button>
-
-
-
             </template>
           </template>
         </a-table>
@@ -114,6 +111,11 @@ export default defineComponent({
           else return "Owner";
         }
       },
+      {
+        title: "Công cụ",
+        key: "action",
+        fixed: "right",
+      },
     ];
     const getUsers = () => {
       axios
@@ -134,15 +136,13 @@ export default defineComponent({
     getUsers();
     const showConfirm = (id) => {
       Modal.confirm({
-        title: 'Do you want to delete this room?',
+        title: 'Do you want to delete this user?',
         icon: createVNode(ExclamationCircleOutlined),
         content: createVNode('div', {
           style: 'color:red;',
         }, ''),
         onOk() {
-          console.log('OK');
-
-          axios.delete(`http://127.0.0.1:8000/api/rooms/${id}`, {
+          axios.delete(`http://127.0.0.1:8000/api/users/${id}`, {
             headers: {
               'Authorization': `Bearer ${JSON.parse(localStorage.getItem('userData')).token}`
             }

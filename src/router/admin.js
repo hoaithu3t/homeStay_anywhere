@@ -82,8 +82,18 @@ const admin = [
   },
   {
     path: "/users/create",
-    component: () => import("../layouts/users/create.vue"),
+    component: () => import("../layouts/users/create-update.vue"),
     name: "user-create",
+  },
+  {
+    path: "/users/:id/edit",
+    component: () => import("../layouts/users/create-update.vue"),
+    name: "user-update",
+  },
+  {
+    path: "/change-password",
+    component: () => import("../layouts/changePassword.vue"),
+    name: "change-password",
   },
 ];
 

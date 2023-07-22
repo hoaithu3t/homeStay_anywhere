@@ -1,11 +1,10 @@
 <template>
     <TheHeader />
-
     <a-form :model="formState" @finish="onFinish" name="nest-messages" :validate-messages="validateMessages"
-        :label-col="{ span: 4 }" :wrapper-col="{ span: 16 }">
-        <a-card title="Create User" style="width: 100%">
+        :label-col="{ span: 4 }" :wrapper-col="{ span: 16 }" class="container">
+        <a-card :title="userId ? 'Update user info' : 'Create User'" style="width: 100%">
             <div class="row mb-3">
-                <div class="col-12 col-sm-4 mb-3 ">
+                <div class="col-4 mb-3">
                     <div class="col-12 d-flex justify-content-center align-items-center mb-3">
                         <div class="">
                             <a-upload v-model:file-list="avatarList" name="image" list-type="picture-card"
@@ -26,7 +25,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-sm-8">
+                <div class="col-8">
                     <a-form-item name="name" label="Name" :rules="[{ required: true }]">
                         <a-input v-model:value="formState.name" />
                     </a-form-item>
@@ -35,7 +34,8 @@
                     </a-form-item>
                     <a-form-item name="phone_number" label="Phone number" :rules="[{
                         pattern: /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
-                    }]">
+                    }]
+                        ">
                         <a-input v-model:value="formState.phone_number" />
                     </a-form-item>
                     <a-form-item name="gender" label="Gender" :rules="[{ type: 'number' }]">
@@ -55,30 +55,24 @@
                         </a-radio-group>
                     </a-form-item>
 
-                    <a-form-item label="Password" name="password"
+                    <a-form-item label="Password" name="change_password"
                         :rules="[{ required: true, message: 'Please input your password!' }]">
-                        <a-input-password v-model:value="formState.password" />
-                    </a-form-item>
-                    <a-form-item label="Confirm password" name="c_password"
-                        :rules="[{ required: true, message: 'Please input your password!' }]">
-                        <a-input-password v-model:value="formState.c_password" />
+                        <a-input-password v-model:value="formState.change_password" />
                     </a-form-item>
 
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-12 d-grid d-sm-flex justify-content-sm-end mx-auto">
-                    <a-button class="me-0 me-sm-2 mb-3 mb-sm-0">
-                        <router-link :to="{ name: 'admin-users' }">
-                            <span>Hủy</span>
-                        </router-link>
-                    </a-button>
+            <div class="d-flex container justify-content-end">
+                <a-button class="me-0 me-sm-2 mb-3 mb-sm-0">
+                    <router-link :to="{ name: 'admin-users' }">
+                        <span>Hủy</span>
+                    </router-link>
+                </a-button>
 
-                    <a-button type="primary" html-type="submit">
-                        <span>Lưu</span>
-                    </a-button>
-                </div>
+                <a-button type="primary" html-type="submit">
+                    <span>Lưu</span>
+                </a-button>
             </div>
         </a-card>
     </a-form>
@@ -107,14 +101,14 @@ export default {
             phone_number: '',
             gender: 0,
             role: 1,
-            password: '',
-            c_password: '',
+            change_password: undefined,
         });
         const avatarList = ref([]);
         const loading = ref(false);
+        const userId = route.params.id
 
         const getUserInfo = () => {
-            axios.get(`http://127.0.0.1:8000/api/user/${route.params.id}`, {
+            axios.get(`http://127.0.0.1:8000/api/users/${userId}`, {
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(localStorage.getItem('userData')).token}`
                 }
@@ -161,8 +155,8 @@ export default {
             }
             return isJpgOrPng && isLt2M;
         };
-        route.params.id && getUserInfo();
-        const onFinish = () => {
+        userId && getUserInfo();
+        const createUser = () => {
             axios.post(`http://127.0.0.1:8000/api/users`,
                 { ...formState, birthday: formState.birthday.format('YYYY-MM-DD') }
                 , {
@@ -182,8 +176,33 @@ export default {
                 .catch((error) => {
                     message.error("Some think error")
                 });
+        }
+        const updateUser = () => {
+            axios.put(`http://127.0.0.1:8000/api/users/${userId}`,
+                { ...formState, birthday: formState.birthday.format('YYYY-MM-DD') }
+                , {
+                    headers: {
+                        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('userData')).token}`
+                    }
+                })
+                .then((response) => {
+                    if (response.data.success) {
+                        console.log(response.data)
+                        message.success(response.data.message);
+                    }
+                    else {
+                        message.error(response.data.message)
+                    }
+                })
+                .catch((error) => {
+                    message.error("Some think error")
+                });
+        }
+        const onFinish = () => {
+            userId ? updateUser() : createUser()
         };
         return {
+            userId,
             formState,
             onFinish,
             avatarList,
@@ -209,5 +228,9 @@ export default {
 .ant-upload-select-picture-card .ant-upload-text {
     margin-top: 8px;
     color: #666;
+}
+
+.ant-card-head-title {
+    font-size: 24px;
 }
 </style>

@@ -40,9 +40,6 @@
               <a-button type="primary" class="ms-3" @click="showConfirm(record.id)">
                 <i class="fa-solid fa-trash"></i>
               </a-button>
-
-
-
             </template>
           </template>
         </a-table>

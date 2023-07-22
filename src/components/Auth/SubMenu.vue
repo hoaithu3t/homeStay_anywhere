@@ -8,29 +8,23 @@
                 <a-menu>
                     <a-menu-item key="profile">
                         <router-link :to="{ name: 'profile' }">
-                            <span>
-                                Profile
-                            </span>
+                            Profile
                         </router-link>
                     </a-menu-item>
                     <a-menu-item v-if="JSON.parse(userData).role === 2">
                         <router-link :to="{ name: 'homestays' }">
-                            <span>
-                                My homestays
-                            </span>
+                            My homestays
                         </router-link>
                     </a-menu-item>
                     <a-menu-item v-if="JSON.parse(userData).role === 0">
                         <router-link :to="{ name: 'user-manager' }">
-                            <span>
-                                User Manager
-                            </span>
+                            User Manager
                         </router-link>
                     </a-menu-item>
                     <a-menu-item>
-                        <a>
-                            Settings
-                        </a>
+                        <router-link :to="{ name: 'change-password' }">
+                            Change password
+                        </router-link>
                     </a-menu-item>
                     <a-menu-item>
                         <a @click="logout">
