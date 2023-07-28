@@ -4,7 +4,7 @@
     <h1>Login</h1>
     <a-form :label-col="{ span: 6 }" :wrapper-col="{ span: 14 }" :model="formState" name="login-form" @finish="onFinish"
       @finishFailed="onFinishFailed">
-      <a-form-item label="Email" name="email" :rules="[{ required: true, message: 'Please input your username!' }]">
+      <a-form-item label="Email" name="email" :rules="[{ required: true, message: 'Please input your email!' }]">
         <a-input v-model:value="formState.email">
           <template #prefix>
             <UserOutlined class="site-form-item-icon" />
@@ -19,10 +19,9 @@
           </template>
         </a-input-password>
       </a-form-item>
-      <br />
       <p class="text-danger">{{ errorMesage }}</p>
-
-
+      <br/>
+      
       <div class="d-flex justify-content-between">
         <p class="fst-italic">You don't have an account, register
           <a @click="changeModalRegister">here</a>

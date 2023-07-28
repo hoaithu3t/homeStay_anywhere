@@ -30,7 +30,7 @@
                     <a-form-item name="name" label="Name" :rules="[{ required: true }]">
                         <a-input v-model:value="formState.name" />
                     </a-form-item>
-                    <a-form-item name="email" label="Email" :rules="[{ type: 'email' }]">
+                    <a-form-item name="email" label="Email" :rules="[{required: true },{ type: 'email' }]">
                         <a-input v-model:value="formState.email" />
                     </a-form-item>
                     <a-form-item name="phone_number" label="Phone number" :rules="[{
