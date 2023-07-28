@@ -65,7 +65,7 @@
         <div class="section-title pb-3">Top homestays recommended for you</div>
 
 
-        <div class="d-flex flex-wrap justify-content-between">
+        <!-- <div class="d-flex flex-wrap justify-content-between">
           <div v-for="homestay in topHomestays.slice(0, 4)" class="top-homestay">
             <img class="top-homestay-img" src="http://127.0.0.1:8000/storage/locations/check-in-hue-1.jpg" />
             <div class="d-flex flex-column justify-content-between p-2 " style="height: 126px;">
@@ -92,8 +92,8 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="d-flex flex-wrap justify-content-between">
+        </div> -->
+        <!-- <div class="d-flex flex-wrap justify-content-between">
           <div v-for="homestay in topHomestays.slice(4)" class="top-homestay">
             <img class="top-homestay-img" src="http://127.0.0.1:8000/storage/locations/check-in-hue-1.jpg" />
             <div class="d-flex flex-column justify-content-between p-2 " style="height: 126px;">
@@ -120,8 +120,9 @@
               </div>
             </div>
           </div>
-
-
+        </div> -->
+        <div class="d-flex justify-content-between">
+          <CardHomeStay v-for="homestay in topHomestays" :homestay="homestay" />
         </div>
 
 
@@ -138,6 +139,7 @@
 <script>
 import TheHeader from "../components/TheHeader.vue";
 import TheFooter from "../components/TheFooter.vue";
+import CardHomeStay from "../components/HomeStay/Card.vue"
 import dayjs from 'dayjs';
 import { defineComponent, ref } from 'vue';
 import { onClickOutside } from '@vueuse/core'
@@ -150,10 +152,9 @@ export default {
     TheFooter,
     LeftCircleOutlined,
     RightCircleOutlined,
+    CardHomeStay
   },
   setup() {
-    // console.log('localstre1', JSON.parse(localStorage.getItem('userData')));
-    // console.log('localstre2', JSON.parse(localStorage.getItem('userData')).avatar);
     const target = ref(null);
     onClickOutside(target, (event) => isShow.value = false)
 

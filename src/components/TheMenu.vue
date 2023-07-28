@@ -1,9 +1,5 @@
 <template>
-  <a-menu
-    v-model:openKeys="openKeys"
-    v-model:selectedKeys="selectedKeys"
-    mode="inline"
-  >
+  <a-menu v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys" mode="inline">
     <a-menu-item key="admin-users">
       <router-link :to="{ name: 'admin-users' }">
         <span>
@@ -15,24 +11,28 @@
     <a-menu-item key="admin-roles">
       <router-link :to="{ name: 'admin-roles' }">
         <span>
-          <TagOutlined class="me-1"/> Vai trò
+          <TagOutlined class="me-1" /> Vai trò
         </span>
       </router-link>
     </a-menu-item>
 
-    <a-menu-item key="admin-settings">
-      <router-link :to="{ name: 'admin-settings' }">
+    <a-menu-item key="change-password">
+      <a @click="setShowModalChangePassword(true)">
         <span>
-          Cài đặt
+          Đổi mật khẩu
         </span>
-      </router-link>
+      </a>
     </a-menu-item>
+
+    <Login :showLogin="openModalChangePassword" :setShowLogin="setShowModalChangePassword"
+      :setShowRegister="setShowModalChangePassword" />
+
   </a-menu>
 </template>
 
 <script>
 import { UserOutlined, TagOutlined, SettingOutlined } from "@ant-design/icons-vue";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useMenu } from "../stores/use-menu.js";
 export default defineComponent({
@@ -43,8 +43,14 @@ export default defineComponent({
   },
   setup() {
     const store = useMenu();
+    const openModalChangePassword = ref(false)
+    const setShowModalChangePassword = (value) => {
+      showLogin.value = value;
+    }
 
     return {
+      openModalChangePassword,
+      setShowModalChangePassword,
       ...storeToRefs(store),
     };
   },
