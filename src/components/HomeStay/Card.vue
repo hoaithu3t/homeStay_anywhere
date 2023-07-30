@@ -1,6 +1,5 @@
 <template>
-    <a-card hoverable style="width: 300px" class="card-homestay">
-
+    <a-card hoverable style="width: 300px" class="card-homestay mb-3">
         <template #cover>
             <img src="http://127.0.0.1:8000/storage/locations/check-in-hue-1.jpg" />
         </template>

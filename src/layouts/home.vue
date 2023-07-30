@@ -1,7 +1,7 @@
 <template>
   <TheHeader />
   <!-- <img src="../assets/bien.jpg" style="width: 100%; height: 320px; object-fit: cover;" /> -->
-  <div class="background-gradient" style="height: 264px;">
+  <div class="background-gradient-1" style="height: 264px;">
     <div class="container">
       <div class="" style="padding: 32px 0 36px;">
         <h1 class="text-white" style="font-size: 38px;">Tìm chỗ nghỉ tiếp theo</h1>
@@ -50,10 +50,10 @@
   </div>
   <div class="content">
     <div class="container">
-      <div class="section top-destinations" style="">
+      <div class="section top-destinations">
         <div class="section-title py-2">Top destinations in Vietnam</div>
         <div class="mt-4 d-flex justify-content-between">
-          <a href="" class="destination" v-for="location in topLocations">
+          <a class="destination" v-for="location in topLocations">
             <img :src="'http://localhost:8000/storage/' + location.thumbnail"
               style="width: 124px; height: 124px; border-radius: 50%;" />
             <p class="destination-name mt-2">{{ location.name }}</p>
@@ -64,68 +64,9 @@
       <div class="section top-homestays " style="padding: 40px 0 ; text-align: center;">
         <div class="section-title pb-3">Top homestays recommended for you</div>
 
-
-        <!-- <div class="d-flex flex-wrap justify-content-between">
-          <div v-for="homestay in topHomestays.slice(0, 4)" class="top-homestay">
-            <img class="top-homestay-img" src="http://127.0.0.1:8000/storage/locations/check-in-hue-1.jpg" />
-            <div class="d-flex flex-column justify-content-between p-2 " style="height: 126px;">
-              <div>
-                <h4 class="top-homestay-name mb-0">{{ homestay.name }}</h4>
-                <div class="top-homestay-location d-flex align-items-center">
-                  <i class="fa-solid fa-location-dot"></i>
-                  <span class="ms-2">{{ homestay.location_name }}</span>
-                </div>
-                <div v-if="homestay.countz > 0" class="d-flex align-items-center mt-1">
-                  <div class="d-flex justify-content-center  align-items-center top-homestay-point me-1">{{
-                    homestay.pointz }}
-                  </div>
-                  <div v-if="homestay.pointz >= 9.5" class="me-1" style="color: var(--bold);">Xuất sắc - </div>
-                  <div v-else-if="homestay.pointz >= 9" class="me-1" style="color: var(--bold);">Tuyệt vời - </div>
-                  <div v-else-if="homestay.pointz >= 8.5" class="me-1" style="color: var(--bold);">Rất tốt - </div>
-                  <div v-else-if="homestay.pointz >= 8" class="me-1" style="color: var(--bold);">Tốt - </div>
-                  <div style="color: var(--light);">{{ homestay.countz }} đánh giá</div>
-                </div>
-                <div v-else class="text-start">Chưa có đánh giá</div>
-              </div>
-              <div class="top-homestay-price d-flex justify-content-end mt-2">
-                <div>VND {{ formatMoney(homestay.min_price) }}</div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <!-- <div class="d-flex flex-wrap justify-content-between">
-          <div v-for="homestay in topHomestays.slice(4)" class="top-homestay">
-            <img class="top-homestay-img" src="http://127.0.0.1:8000/storage/locations/check-in-hue-1.jpg" />
-            <div class="d-flex flex-column justify-content-between p-2 " style="height: 126px;">
-              <div>
-                <h4 class="top-homestay-name mb-0">{{ homestay.name }}</h4>
-                <div class="top-homestay-location d-flex align-items-center">
-                  <i class="fa-solid fa-location-dot"></i>
-                  <span class="ms-2">{{ homestay.location_name }}</span>
-                </div>
-                <div v-if="homestay.countz > 0" class="d-flex align-items-center mt-1">
-                  <div class="d-flex justify-content-center  align-items-center top-homestay-point me-1">{{
-                    homestay.pointz }}
-                  </div>
-                  <div v-if="homestay.pointz >= 9.5" class="me-1" style="color: var(--bold);">Xuất sắc - </div>
-                  <div v-else-if="homestay.pointz >= 9" class="me-1" style="color: var(--bold);">Tuyệt vời - </div>
-                  <div v-else-if="homestay.pointz >= 8.5" class="me-1" style="color: var(--bold);">Rất tốt - </div>
-                  <div v-else-if="homestay.pointz >= 8" class="me-1" style="color: var(--bold);">Tốt - </div>
-                  <div style="color: var(--light);">{{ homestay.countz }} đánh giá</div>
-                </div>
-                <div v-else class="text-start">Chưa có đánh giá</div>
-              </div>
-              <div class="top-homestay-price d-flex justify-content-end mt-2">
-                <div>VND {{ formatMoney(homestay.min_price) }}</div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between flex-wrap">
           <CardHomeStay v-for="homestay in topHomestays" :homestay="homestay" />
         </div>
-
-
       </div>
 
     </div>

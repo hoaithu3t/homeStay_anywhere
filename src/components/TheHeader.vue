@@ -1,5 +1,5 @@
 <template>
-  <div class="background-gradient">
+  <div class="background-gradient-2">
     <div class="container">
       <div class="row text-white py-3">
         <!-- <div
