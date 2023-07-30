@@ -33,22 +33,23 @@
                         <a-input v-model:value="formState.email" />
                     </a-form-item>
                     <a-form-item name="phone_number" label="Phone number" :rules="[{
-                        pattern: /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+                        min: 10
+                        // pattern: /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
                     }]
                         ">
                         <a-input v-model:value="formState.phone_number" />
                     </a-form-item>
-                    <a-form-item name="gender" label="Gender" :rules="[{ type: 'number' }]">
+                    <a-form-item name="gender" label="Gender" :rules="[{ required: true },{ type: 'number' }]">
                         <a-radio-group v-model:value="formState.gender">
                             <a-radio :value=0>Male</a-radio>
                             <a-radio :value=1>Female</a-radio>
                             <a-radio :value=2>Other</a-radio>
                         </a-radio-group>
                     </a-form-item>
-                    <a-form-item name="birthday" label="Birthday">
+                    <a-form-item name="birthday" label="Birthday" :rules="[{ required: true }]">
                         <a-date-picker v-model:value="formState.birthday" format="DD-MM-YYYY" />
                     </a-form-item>
-                    <a-form-item name="role" label="Role" :rules="[{ type: 'number' }]">
+                    <a-form-item name="role" label="Role" :rules="[{ required: true },{ type: 'number' }]">
                         <a-radio-group v-model:value="formState.role">
                             <a-radio :value=1>Customer</a-radio>
                             <a-radio :value=2>Owner</a-radio>

@@ -101,26 +101,26 @@ export default defineComponent({
         range: '${label} must be between ${min} and ${max}',
       },
     };
-    // const formState = reactive({
-    //   name: '',
-    //   birthday: undefined,
-    //   email: '',
-    //   phone_number: '',
-    //   gender: 0,
-    //   role: 1,
-    //   password: '',
-    //   c_password: ''
-    // });
     const formState = reactive({
-      name: 'aaa',
+      name: '',
       birthday: undefined,
-      email: 'b@gmail.com',
+      email: '',
       phone_number: '',
       gender: 0,
       role: 1,
-      password: '12345678',
-      c_password: '12345678'
+      password: '',
+      c_password: ''
     });
+    // const formState = reactive({
+    //   name: 'aaa',
+    //   birthday: undefined,
+    //   email: 'b@gmail.com',
+    //   phone_number: '',
+    //   gender: 0,
+    //   role: 1,
+    //   password: '12345678',
+    //   c_password: '12345678'
+    // });
     const dateFormat = 'YYYY-MM-DD';
     const errors = ref({});
 

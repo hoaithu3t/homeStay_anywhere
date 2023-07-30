@@ -20,7 +20,7 @@
             <div class="row align-items-center mb-3">
               <div class="col-6">Adults</div>
               <div class="col-6">
-                <a-input-number id="inputNumber" v-model:value="adults" :min="1" style="width: 100%;" />
+                <a-input-number id="inputNumber" v-model:value="adults" :min="1" @change="changeAdults" style="width: 100%;" />
               </div>
             </div>
             <div class="row align-items-center mb-3">
@@ -32,7 +32,7 @@
             <div class="row align-items-center mb-4">
               <div class="col-6">Rooms</div>
               <div class="col-6">
-                <a-input-number id="inputNumber" v-model:value="room_count" :min="1" style="width: 100%;" />
+                <a-input-number id="inputNumber" v-model:value="room_count" :min="1" @change="changeRoomCount" style="width: 100%;" />
               </div>
             </div>
             <div class="row mb-3">
@@ -44,7 +44,7 @@
           </div>
         </div>
 
-        <a-button class="col-1 search-item btn-search " type="primary">Tìm</a-button>
+        <a-button class="col-1 search-item btn-search " type="primary" @click="search">Search</a-button>
       </div>
     </div>
   </div>
@@ -143,9 +143,11 @@ import CardHomeStay from "../components/HomeStay/Card.vue"
 import dayjs from 'dayjs';
 import { defineComponent, ref } from 'vue';
 import { onClickOutside } from '@vueuse/core'
+
 // import 'vue3-carousel/dist/carousel.css';
 // import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import { LeftCircleOutlined, RightCircleOutlined } from '@ant-design/icons-vue';
+import { Modal } from 'ant-design-vue';
 export default {
   components: {
     TheHeader,
@@ -155,18 +157,36 @@ export default {
     CardHomeStay
   },
   setup() {
+    console.log('hhhhhhh', dayjs('2015/01/01', 'YYYY/MM/DD'))
     const target = ref(null);
     onClickOutside(target, (event) => isShow.value = false)
 
     const locations = ref([]);
-    const location_id = ref(null);
+    const location_id = ref(4);
+    let defaultStartDate = new Date();
+    let defaultEndDate = new Date();
+    defaultEndDate.setDate(defaultEndDate.getDate() + 1);
+    console.log('df',defaultStartDate,'fff',defaultEndDate )
+    const date = ref([
+    dayjs(defaultStartDate),
+    dayjs(defaultEndDate)
+    ]);
     const topLocations = ref([])
     const topHomestays = ref([])
 
     const adults = ref(1);
     const child = ref(0);
     const room_count = ref(1);
+    const changeAdults = () => {
+      // console.log('changeRoomCount')
+      if(room_count.value > adults.value) room_count.value = adults.value;
+    }
+    const changeRoomCount = () => {
+      // console.log('changeRoomCount')
+      if(room_count.value > adults.value) adults.value = room_count.value;
+    }
     const isShow = ref(false)
+    const dateFormat = 'YYYY-MM-DD';
     const getLocations = () => {
       axios.get("http://127.0.0.1:8000/api/locations")
         .then((response) => {
@@ -210,12 +230,75 @@ export default {
       return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     }
     const disabledDate = current => {
+      // console.log(current);
       // Can not select days before today and today
       return current && current < dayjs().startOf('day');
     };
     getLocations();
     getTopLocations();
     getTopHomestays();
+    
+    const search = () => {
+      console.log('search');
+      if (location_id.value == undefined) {
+        Modal.warning({
+          title: 'Location...',
+          content: 'Please enter the name of a location or city to proceed.',
+        });
+        return;
+      }
+      if(date.value == null){
+        Modal.warning({
+          title: 'Date...',
+          content: 'Please select the start date and end date to proceed.',
+        });
+        return;
+      }
+      console.log({
+        //  ...values, birthday: values.birthday.format(dateFormat) 
+         location_id : location_id.value,
+         start_date: date.value[0].format(dateFormat),
+         end_date: date.value[1].format(dateFormat),
+         room_count: room_count.value
+
+
+        })
+      // axios.get("http://127.0.0.1:8000/api/search", {
+      //   //  ...values, birthday: values.birthday.format(dateFormat) 
+      //    location_id : location_id.value,
+      //    start_date: date.value[0].format(dateFormat),
+      //    start_date: date.value[0].format(dateFormat),
+
+
+      //   })
+      //   .then((response) => {
+      //     if (response.data.success) {
+      //       message.success(response.data.message);
+      //       setShowRegister(false);
+      //       useUser().onChange(response.data.data)
+      //       //   router.push({name: "admin-users"});
+      //     }
+      //     else {
+      //       message.error(response.data.message)
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     // if (error?.response?.status === 401) {
+      //     //   errorMesage.value = "Email or password not correct";
+      //     //   message.error("Email or password not correct")
+      //     // }
+
+      //     // else {
+      //     //   message.error("Some think error")
+      //     // }
+      //     console.log(error, error.response.data.data);
+      //     errors.value = error.response.data.data;
+      //     // console.log(errors.email)
+
+
+      //   });
+      
+    }
     return {
       target,
       locations,
@@ -224,13 +307,16 @@ export default {
       topHomestays,
       formatMoney,
       filterOption,
-      date: ref(),
+      date,
       disabledDate,
       size: ref('large'),
       adults,
       child,
       room_count,
+      changeAdults,
+      changeRoomCount,
       isShow,
+      search,
     }
   }
 };

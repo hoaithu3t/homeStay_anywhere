@@ -1,6 +1,6 @@
 <template>
     <TheHeader />
-    <a-card title="Create Room" class="mt-5" style="width: 850px; margin-left: auto; margin-right: auto;">
+    <a-card title="Edit Room" class="mt-5" style="width: 850px; margin-left: auto; margin-right: auto;">
         <a-form :model="room" :label-col="{ span: 6 }" :wrapper-col="{ span: 12, offset : 1}" @finish="onFinish"
             name="nest-messages" :validate-messages="validateMessages">
             <div class="row mb-3">
