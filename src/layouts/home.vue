@@ -98,7 +98,6 @@ export default {
     CardHomeStay
   },
   setup() {
-    console.log('hhhhhhh', dayjs('2015/01/01', 'YYYY/MM/DD'))
     const target = ref(null);
     onClickOutside(target, (event) => isShow.value = false)
 
@@ -107,7 +106,6 @@ export default {
     let defaultStartDate = new Date();
     let defaultEndDate = new Date();
     defaultEndDate.setDate(defaultEndDate.getDate() + 1);
-    console.log('df',defaultStartDate,'fff',defaultEndDate )
     const date = ref([
     dayjs(defaultStartDate),
     dayjs(defaultEndDate)
@@ -132,7 +130,13 @@ export default {
       axios.get("http://127.0.0.1:8000/api/locations")
         .then((response) => {
           // console.log(response);
-          locations.value = response.data.data;
+          locations.value = response.data.data.map((location) => {
+              return {
+                value : location.id,
+                label : location.name,
+                thumbnail : location.thumbnail
+              }
+          });
           // users_status.value = response.data.users_status;
           // departments.value = response.data.departments;
         })

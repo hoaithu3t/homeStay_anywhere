@@ -95,6 +95,12 @@ const admin = [
     component: () => import("../layouts/changePassword.vue"),
     name: "change-password",
   },
+  {
+    path: "/locations",
+    component: () => import("../layouts/locations/index.vue"),
+    name: "location-manager",
+  },
+  
 ];
 
 export default admin;

@@ -30,7 +30,8 @@
                         <a-input v-model:value="formState.name" />
                     </a-form-item>
                     <a-form-item name="email" label="Email" :rules="[{ required: true }, { type: 'email' }]">
-                        <a-input v-model:value="formState.email" />
+                        <a-input v-model:value="formState.email" @change="onChangeEmail" />
+                        <div v-if="errors.email" class="text-danger">{{ errors.email[0] }}</div>
                     </a-form-item>
                     <a-form-item name="phone_number" label="Phone number" :rules="[{
                         min: 10
@@ -65,7 +66,7 @@
                                 <a-input-password v-model:value="formState.password" />
                             </a-form-item>
                             <a-form-item label="Confirm password" name="c_password"
-                                :rules="[{ required: true, message: 'Please input your password again!' }]">
+                                :rules="[{ required: true, validator: validatePass2, trigger: 'change' }]">
                                 <a-input-password v-model:value="formState.c_password" />
                             </a-form-item>
                         </div>
@@ -77,7 +78,7 @@
                             <a-input-password v-model:value="formState.password" />
                         </a-form-item>
                         <a-form-item label="Confirm password" name="c_password"
-                            :rules="[{ required: true, message: 'Please input your password again!' }]">
+                            :rules="[{ required: true, validator: validatePass2, trigger: 'change' }]">
                             <a-input-password v-model:value="formState.c_password" />
                         </a-form-item>
                     </div>
@@ -131,8 +132,21 @@ export default {
         });
         const avatarList = ref([]);
         const loading = ref(false);
-        const userId = route.params.id
-
+        const userId = route.params.id;
+        const errors = ref({});
+        const onChangeEmail = () => {
+            // console.log('onChangeEmail');
+            errors.value.email = []
+        }
+        let validatePass2 = async (rule, value) => {
+            if (value === '') {
+                return Promise.reject('Please input the password again');
+            } else if (value !== formState.password) {
+                return Promise.reject("Two inputs don't match!");
+            } else {
+                return Promise.resolve();
+            }
+        };
         const getUserInfo = () => {
             axios.get(`http://127.0.0.1:8000/api/users/${userId}`, {
                 headers: {
@@ -201,7 +215,10 @@ export default {
                     }
                 })
                 .catch((error) => {
-                    message.error("Some think error")
+                    // message.error("Some think error");
+                    console.log(error);
+                    errors.value = error.response.data.data;
+
                 });
         }
         const updateUser = () => {
@@ -222,7 +239,9 @@ export default {
                     }
                 })
                 .catch((error) => {
-                    message.error("Some think error")
+                    // message.error("Some think error")
+                    console.log(error);
+                    errors.value = error.response.data.data;
                 });
         }
         const onFinish = () => {
@@ -231,11 +250,14 @@ export default {
         return {
             userId,
             formState,
+            errors,
             onFinish,
             avatarList,
             loading,
             avatarChange,
             beforeUpload,
+            validatePass2,
+            onChangeEmail,
         }
     },
 

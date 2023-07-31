@@ -9,12 +9,15 @@
                     <a-form-item name="name" label="Name" :rules="[{ required: true }]">
                         <a-input v-model:value="room.name" class="input" />
                     </a-form-item>
-                    <a-form-item name="adults" label="Adults" :rules="[{ required: true }]">
+                    <a-form-item name="area" label="Area" :rules="[{ required: true }]">
+                        <a-input-number id="inputNumber" v-model:value="room.area" :min="1" class="input" />
+                    </a-form-item>
+                    <!-- <a-form-item name="adults" label="Adults" :rules="[{ required: true }]">
                         <a-input-number id="inputNumber" v-model:value="room.adults" :min="1" class="input" />
                     </a-form-item>
                     <a-form-item name="child" label="Children" :rules="[{ required: true }]">
                         <a-input-number id="inputNumber" v-model:value="room.child" :min="0"  class="input"/>
-                    </a-form-item>
+                    </a-form-item> -->
                     <a-form-item name="double_bed" label="Double Bed" :rules="[{ required: true }] ">
                         <a-input-number id="inputNumber" v-model:value="room.double_bed" :min="0" class="input" />
                     </a-form-item>
@@ -74,8 +77,9 @@ export default {
         const room = reactive({
             
             name: '',
-            adults: 1,
-            child: 0,
+            area: 1,
+            // adults: 1,
+            // child: 0,
             double_bed: 0,
             single_bed: 0,
             price: 0,
@@ -87,8 +91,9 @@ export default {
                 .then((response) => {
                     console.log(response);
                     room.name = response.data.data.name;
-                    room.adults = response.data.data.adults;
-                    room.child = response.data.data.child;
+                    room.area = response.data.data.area;
+                    // room.adults = response.data.data.adults;
+                    // room.child = response.data.data.child;
                     room.double_bed = response.data.data.double_bed;
                     room.single_bed = response.data.data.single_bed;
                     room.price = response.data.data.price;

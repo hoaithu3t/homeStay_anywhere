@@ -1,6 +1,6 @@
 <template>
     <TheHeader />
-    <a-card title="Create Homestay" class="container mt-5" >
+    <a-card title="Create Homestay" class="container mt-5">
         <a-form :model="formState" :label-col="{ span: 4 }" :wrapper-col="{ span: 12 }" @finish="onFinish"
             name="nest-messages" :validate-messages="validateMessages">
             <div class="row mb-3">
@@ -135,7 +135,13 @@ export default {
             axios.get("http://127.0.0.1:8000/api/locations")
                 .then((response) => {
                     // console.log(response);
-                    locations.value = response.data.data;
+                    locations.value = response.data.data.map((location) => {
+                        return {
+                            value: location.id,
+                            label: location.name,
+                            thumbnail: location.thumbnail
+                        }
+                    });
                     // users_status.value = response.data.users_status;
                     // departments.value = response.data.departments;
                 })

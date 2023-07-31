@@ -75,7 +75,7 @@
                 <div class="col-2"></div>
                 <div class="col-8">
                     <a-button type="primary">
-                        <router-link :to="{ name: 'rooms' , params : {id : route.params.id}}">
+                        <router-link :to="{ name: 'rooms', params: { id: route.params.id } }">
                             <span>Room Info</span>
                         </router-link>
                     </a-button>
@@ -85,7 +85,7 @@
                 <div class="col-12 d-grid d-sm-flex justify-content-sm-end mx-auto">
                     <a-button @click="$router.back()" class="me-0 me-sm-2 mb-3 mb-sm-0">
                         <!-- <router-link :to="{ name: 'homestays' }"> -->
-                            <span>Hủy</span>
+                        <span>Hủy</span>
                         <!-- </router-link> -->
                     </a-button>
 
@@ -147,7 +147,13 @@ export default {
             axios.get("http://127.0.0.1:8000/api/locations")
                 .then((response) => {
                     // console.log(response);
-                    locations.value = response.data.data;
+                    locations.value = response.data.data.map((location) => {
+                        return {
+                            value: location.id,
+                            label: location.name,
+                            thumbnail: location.thumbnail
+                        }
+                    });
                     // users_status.value = response.data.users_status;
                     // departments.value = response.data.departments;
                 })

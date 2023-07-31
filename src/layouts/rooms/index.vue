@@ -76,14 +76,9 @@ export default defineComponent({
         key: "name",
       },
       {
-        title: "Adults",
-        dataIndex: "adults",
-        key: "adults",
-      },
-      {
-        title: "Children",
-        dataIndex: "child",
-        key: "child",
+        title: "Area",
+        dataIndex: "area",
+        key: "area",
       },
       {
         title: "Double Bed",

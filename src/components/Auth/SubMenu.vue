@@ -21,6 +21,11 @@
                             User Manager
                         </router-link>
                     </a-menu-item>
+                    <a-menu-item v-if="JSON.parse(userData).role === 0">
+                        <router-link :to="{ name: 'location-manager' }">
+                            Location Manager
+                        </router-link>
+                    </a-menu-item>
                     <a-menu-item>
                         <router-link :to="{ name: 'change-password' }">
                             Change password
