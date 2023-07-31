@@ -51,10 +51,7 @@
           <a-form-item name="email" label="Email" :rules="[{ type: 'email', required: true }]">
             <a-input v-model:value="formState.email" />
           </a-form-item>
-          <a-form-item name="phone_number" label="Phone number" :rules="[{
-            pattern: /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
-            , required: true
-          }]">
+          <a-form-item name="phone_number" label="Phone number" :rules="[{ type: 'string' }, { min: 10 }]">
             <a-input v-model:value="formState.phone_number" />
           </a-form-item>
           <a-form-item name="gender" label="Gender" :rules="[{ type: 'number', required: true }]">

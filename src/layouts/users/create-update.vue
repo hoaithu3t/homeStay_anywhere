@@ -29,7 +29,7 @@
                     <a-form-item name="name" label="Name" :rules="[{ required: true }]">
                         <a-input v-model:value="formState.name" />
                     </a-form-item>
-                    <a-form-item name="email" label="Email" :rules="[{required: true },{ type: 'email' }]">
+                    <a-form-item name="email" label="Email" :rules="[{ required: true }, { type: 'email' }]">
                         <a-input v-model:value="formState.email" />
                     </a-form-item>
                     <a-form-item name="phone_number" label="Phone number" :rules="[{
@@ -39,7 +39,7 @@
                         ">
                         <a-input v-model:value="formState.phone_number" />
                     </a-form-item>
-                    <a-form-item name="gender" label="Gender" :rules="[{ required: true },{ type: 'number' }]">
+                    <a-form-item name="gender" label="Gender" :rules="[{ required: true }, { type: 'number' }]">
                         <a-radio-group v-model:value="formState.gender">
                             <a-radio :value=0>Male</a-radio>
                             <a-radio :value=1>Female</a-radio>
@@ -49,24 +49,46 @@
                     <a-form-item name="birthday" label="Birthday" :rules="[{ required: true }]">
                         <a-date-picker v-model:value="formState.birthday" format="DD-MM-YYYY" />
                     </a-form-item>
-                    <a-form-item name="role" label="Role" :rules="[{ required: true },{ type: 'number' }]">
+                    <a-form-item name="role" label="Role" :rules="[{ required: true }, { type: 'number' }]">
                         <a-radio-group v-model:value="formState.role">
                             <a-radio :value=1>Customer</a-radio>
                             <a-radio :value=2>Owner</a-radio>
                         </a-radio-group>
                     </a-form-item>
+                    <div v-if="userId">
+                        <a-form-item label="Change password" name="change-password">
+                            <a-checkbox v-model:checked="formState.change_password" />
+                        </a-form-item>
+                        <div v-if="formState.change_password">
+                            <a-form-item label="Password" name="password"
+                                :rules="[{ required: true, message: 'Please input your password!' }]">
+                                <a-input-password v-model:value="formState.password" />
+                            </a-form-item>
+                            <a-form-item label="Confirm password" name="c_password"
+                                :rules="[{ required: true, message: 'Please input your password again!' }]">
+                                <a-input-password v-model:value="formState.c_password" />
+                            </a-form-item>
+                        </div>
 
-                    <a-form-item label="Password" name="change_password"
-                        :rules="[{ required: true, message: 'Please input your password!' }]">
-                        <a-input-password v-model:value="formState.change_password" />
-                    </a-form-item>
+                    </div>
+                    <div v-else>
+                        <a-form-item label="Password" name="password"
+                            :rules="[{ required: true, message: 'Please input your password!' }]">
+                            <a-input-password v-model:value="formState.password" />
+                        </a-form-item>
+                        <a-form-item label="Confirm password" name="c_password"
+                            :rules="[{ required: true, message: 'Please input your password again!' }]">
+                            <a-input-password v-model:value="formState.c_password" />
+                        </a-form-item>
+                    </div>
+
 
                 </div>
             </div>
 
             <div class="d-flex container justify-content-end">
                 <a-button class="me-0 me-sm-2 mb-3 mb-sm-0">
-                    <router-link :to="{ name: 'admin-users' }">
+                    <router-link :to="{ name: 'user-manager' }">
                         <span>Hủy</span>
                     </router-link>
                 </a-button>
@@ -82,7 +104,7 @@
 import { ref, reactive } from "vue"
 import TheHeader from "../../components/TheHeader.vue"
 import dayjs from "dayjs";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { message } from 'ant-design-vue';
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue';
 
@@ -94,6 +116,7 @@ export default {
     },
     setup() {
         const route = useRoute();
+        const router = useRouter();
         const formState = reactive({
             name: '',
             birthday: undefined,
@@ -102,7 +125,9 @@ export default {
             phone_number: '',
             gender: 0,
             role: 1,
+            password: undefined,
             change_password: undefined,
+            c_password: undefined
         });
         const avatarList = ref([]);
         const loading = ref(false);
@@ -169,6 +194,7 @@ export default {
                     if (response.data.success) {
                         console.log(response.data)
                         message.success(response.data.message);
+                        router.push({ name: "user-manager" });
                     }
                     else {
                         message.error(response.data.message)
