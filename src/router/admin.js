@@ -100,7 +100,11 @@ const admin = [
     component: () => import("../layouts/locations/index.vue"),
     name: "location-manager",
   },
-  
+  {
+    path: "/search",
+    component: () => import("../layouts/search/search.vue"),
+    name: "search-room-page",
+  },
 ];
 
 export default admin;

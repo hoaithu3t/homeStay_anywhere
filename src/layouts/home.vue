@@ -20,7 +20,8 @@
             <div class="row align-items-center mb-3">
               <div class="col-6">Adults</div>
               <div class="col-6">
-                <a-input-number id="inputNumber" v-model:value="adults" :min="1" @change="changeAdults" style="width: 100%;" />
+                <a-input-number id="inputNumber" v-model:value="adults" :min="1" @change="changeAdults"
+                  style="width: 100%;" />
               </div>
             </div>
             <div class="row align-items-center mb-3">
@@ -32,7 +33,8 @@
             <div class="row align-items-center mb-4">
               <div class="col-6">Rooms</div>
               <div class="col-6">
-                <a-input-number id="inputNumber" v-model:value="room_count" :min="1" @change="changeRoomCount" style="width: 100%;" />
+                <a-input-number id="inputNumber" v-model:value="room_count" :min="1" @change="changeRoomCount"
+                  style="width: 100%;" />
               </div>
             </div>
             <div class="row mb-3">
@@ -87,6 +89,7 @@ import { onClickOutside } from '@vueuse/core'
 
 // import 'vue3-carousel/dist/carousel.css';
 // import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import { useRouter } from "vue-router";
 import { LeftCircleOutlined, RightCircleOutlined } from '@ant-design/icons-vue';
 import { Modal } from 'ant-design-vue';
 export default {
@@ -100,6 +103,7 @@ export default {
   setup() {
     const target = ref(null);
     onClickOutside(target, (event) => isShow.value = false)
+    const router = useRouter();
 
     const locations = ref([]);
     const location_id = ref(4);
@@ -107,8 +111,8 @@ export default {
     let defaultEndDate = new Date();
     defaultEndDate.setDate(defaultEndDate.getDate() + 1);
     const date = ref([
-    dayjs(defaultStartDate),
-    dayjs(defaultEndDate)
+      dayjs(defaultStartDate),
+      dayjs(defaultEndDate)
     ]);
     const topLocations = ref([])
     const topHomestays = ref([])
@@ -118,11 +122,11 @@ export default {
     const room_count = ref(1);
     const changeAdults = () => {
       // console.log('changeRoomCount')
-      if(room_count.value > adults.value) room_count.value = adults.value;
+      if (room_count.value > adults.value) room_count.value = adults.value;
     }
     const changeRoomCount = () => {
       // console.log('changeRoomCount')
-      if(room_count.value > adults.value) adults.value = room_count.value;
+      if (room_count.value > adults.value) adults.value = room_count.value;
     }
     const isShow = ref(false)
     const dateFormat = 'YYYY-MM-DD';
@@ -131,11 +135,11 @@ export default {
         .then((response) => {
           // console.log(response);
           locations.value = response.data.data.map((location) => {
-              return {
-                value : location.id,
-                label : location.name,
-                thumbnail : location.thumbnail
-              }
+            return {
+              value: location.id,
+              label: location.name,
+              thumbnail: location.thumbnail
+            }
           });
           // users_status.value = response.data.users_status;
           // departments.value = response.data.departments;
@@ -182,7 +186,7 @@ export default {
     getLocations();
     getTopLocations();
     getTopHomestays();
-    
+
     const search = () => {
       console.log('search');
       if (location_id.value == undefined) {
@@ -192,7 +196,7 @@ export default {
         });
         return;
       }
-      if(date.value == null){
+      if (date.value == null) {
         Modal.warning({
           title: 'Date...',
           content: 'Please select the start date and end date to proceed.',
@@ -201,13 +205,20 @@ export default {
       }
       console.log({
         //  ...values, birthday: values.birthday.format(dateFormat) 
-         location_id : location_id.value,
-         start_date: date.value[0].format(dateFormat),
-         end_date: date.value[1].format(dateFormat),
-         room_count: room_count.value
+        location_id: location_id.value,
+        start_date: date.value[0].format(dateFormat),
+        end_date: date.value[1].format(dateFormat),
+        room_count: room_count.value
 
-
-        })
+      })
+      router.push({
+        name: "search-room-page", params: {
+          location_id: location_id.value,
+          start_date: date.value[0].format(dateFormat),
+          end_date: date.value[1].format(dateFormat),
+          room_count: room_count.value
+        }
+      });
       // axios.get("http://127.0.0.1:8000/api/search", {
       //   //  ...values, birthday: values.birthday.format(dateFormat) 
       //    location_id : location_id.value,
@@ -242,7 +253,7 @@ export default {
 
 
       //   });
-      
+
     }
     return {
       target,
